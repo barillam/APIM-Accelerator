@@ -55,11 +55,10 @@ jobs:
           echo "Deploying to ${{ fromJson(env.config).AZURE_LOCATION }} with name prefix ${{ fromJson(env.config).RESOURCE_NAME_PREFIX }} and environment tag ${{ fromJson(env.config).ENVIRONMENT_TAG }}"
         
         # Log into Azure
-      - uses: azure/login@v1
+      - name: Log in with Azure
+        uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
       - name: Run Preflight Validation
         working-directory: ./reference-implementations/AppGW-IAPIM-Func/bicep

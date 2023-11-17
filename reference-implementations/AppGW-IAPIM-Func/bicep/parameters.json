@@ -6,10 +6,10 @@
             "value": "TestUser"
         },
         "vmPassword": {
-            "value": "Password23!"
+            "value": "ENTERPASSWORD"
         },
         "accountName": {
-            "value": "github.com/barillam"
+            "value": "https://dev.azure.com/ORGNAME OR github.com/ORGUSERNAME OR none"
         },
         "personalAccessToken": {
             "value": "ENTERPAT"
@@ -18,7 +18,7 @@
             "value": "demoWL"
         },
         "CICDAgentType": {
-            "value": "github"
+            "value": "azuredevops"
         },
         "environment" :{ 
             "value": "dev"

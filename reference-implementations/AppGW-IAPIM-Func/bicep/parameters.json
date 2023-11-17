@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmUsername": {
-            "value": "ENTERUSERNAME"
+            "value": "TestUser"
         },
         "vmPassword": {
-            "value": "ENTERPASSWORD"
+            "value": "Password23!"
         },
         "accountName": {
-            "value": "https://dev.azure.com/ORGNAME OR github.com/ORGUSERNAME OR none"
+            "value": "github.com/barillam"
         },
         "personalAccessToken": {
             "value": "ENTERPAT"
@@ -18,16 +18,16 @@
             "value": "demoWL"
         },
         "CICDAgentType": {
-            "value": "azuredevops OR github OR none"
+            "value": "github"
         },
         "environment" :{ 
             "value": "dev"
         },
         "appGatewayFqdn" :{ 
-            "value": "ENTER FQDN"
+            "value": "APIM.test.cloudsecuritydemonstration.com"
         },
         "appGatewayCertType" :{
-            "value": "selfsigned or custom"
+            "value": "selfsigned"
         }
     }
 }

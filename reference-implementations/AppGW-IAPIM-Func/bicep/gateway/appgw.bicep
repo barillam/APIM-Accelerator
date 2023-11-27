@@ -36,18 +36,18 @@ resource appGatewayIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@20
   location: location
 }
 
-// module certificate './modules/certificate.bicep' = {
-//   name: 'certificate'
-//   scope: resourceGroup(keyVaultResourceGroupName)
-//   params: {
-//     managedIdentity:    appGatewayIdentity
-//     keyVaultName:       keyVaultName
-//     location:           location
-//     appGatewayFQDN:     appGatewayFQDN
-//     appGatewayCertType: appGatewayCertType
-//     certPassword:       certPassword
-//   }
-// }
+module certificate './modules/certificate.bicep' = {
+  name: 'certificate'
+  scope: resourceGroup(keyVaultResourceGroupName)
+  params: {
+    managedIdentity:    appGatewayIdentity
+    keyVaultName:       keyVaultName
+    location:           location
+    appGatewayFQDN:     appGatewayFQDN
+    appGatewayCertType: appGatewayCertType
+    certPassword:       certPassword
+  }
+}
 
 resource appGatewayPublicIPAddress 'Microsoft.Network/publicIPAddresses@2019-09-01' = {
   name: appGatewayPrimaryPip
@@ -65,7 +65,7 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
   name: appGatewayName
   location: location
   dependsOn: [
-    // certificate
+    certificate
   ]
   identity: {
     type: 'UserAssigned'
@@ -88,14 +88,14 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
         }
       }
     ]
-    // sslCertificates: [
-    //   {
-    //     name: appGatewayFQDN
-    //     properties: {
-    //       keyVaultSecretId:  certificate.outputs.secretUri
-    //     }
-    //   }
-    // ]
+    sslCertificates: [
+      {
+        name: appGatewayFQDN
+        properties: {
+          keyVaultSecretId:  certificate.outputs.secretUri
+        }
+      }
+    ]
     sslPolicy: {
       minProtocolVersion: 'TLSv1_2'
       policyType: 'Custom'

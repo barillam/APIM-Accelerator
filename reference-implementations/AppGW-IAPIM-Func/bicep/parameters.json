@@ -27,7 +27,7 @@
             "value": "APIM.test.cloudsecuritydemonstration.com"
         },
         "appGatewayCertType" :{
-            "value": "selfsigned"
+            "value": "custom"
         }
     }
 }

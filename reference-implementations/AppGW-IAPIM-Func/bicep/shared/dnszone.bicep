@@ -78,10 +78,10 @@ resource scmDnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
 // A Records
 
 resource gatewayRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-  name: 'azure-api.net/${apimName}'
+  parent: gatewayDnsZone
+  name: apimName
   dependsOn: [
     apim
-    gatewayDnsZone
   ]
   properties: {
     aRecords: [
@@ -94,10 +94,10 @@ resource gatewayRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
 }
 
 resource portalRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-  name: 'portal.azure-api.net/${apimName}'
+  parent: portalDnsZone
+  name: apimName
   dependsOn: [
     apim
-    portalDnsZone
   ]
   properties: {
     aRecords: [
@@ -110,10 +110,10 @@ resource portalRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
 }
 
 resource developerRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-  name: 'developer.azure-api.net/${apimName}'
+  parent: developerDnsZone
+  name: apimName
   dependsOn: [
     apim
-    developerDnsZone
   ]
   properties: {
     aRecords: [
@@ -126,10 +126,10 @@ resource developerRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
 }
 
 resource managementRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-  name: 'management.azure-api.net/${apimName}'
+  parent: managementDnsZone
+  name: apimName
   dependsOn: [
     apim
-    managementDnsZone
   ]
   properties: {
     aRecords: [
@@ -142,10 +142,10 @@ resource managementRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
 }
 
 resource scmRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-  name: 'scm.azure-api.net/${apimName}'
+  parent: scmDnsZone
+  name: apimName
   dependsOn: [
     apim
-    scmDnsZone
   ]
   properties: {
     aRecords: [
@@ -160,11 +160,9 @@ resource scmRecord 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
 // Vnet Links
 
 resource gatewayVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: 'azure-api.net/gateway-vnet-dns-link'
+  parent: gatewayDnsZone
+  name: 'gateway-vnet-dns-link'
   location: 'global'
-  dependsOn: [
-    gatewayDnsZone
-  ]
   properties: {
     registrationEnabled: true
     virtualNetwork: {
@@ -174,11 +172,9 @@ resource gatewayVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@
 }
 
 resource portalVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: 'portal.azure-api.net/gateway-vnet-dns-link'
+  parent: portalDnsZone
+  name: 'gateway-vnet-dns-link'
   location: 'global'
-  dependsOn: [
-    portalDnsZone
-  ]
   properties: {
     registrationEnabled: false
     virtualNetwork: {
@@ -188,11 +184,9 @@ resource portalVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2
 }
 
 resource developerVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: 'developer.azure-api.net/gateway-vnet-dns-link'
+  parent: developerDnsZone
+  name: 'gateway-vnet-dns-link'
   location: 'global'
-  dependsOn: [
-    developerDnsZone
-  ]
   properties: {
     registrationEnabled: false
     virtualNetwork: {
@@ -202,11 +196,9 @@ resource developerVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLink
 }
 
 resource managementVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: 'management.azure-api.net/gateway-vnet-dns-link'
+  parent: managementDnsZone
+  name: 'gateway-vnet-dns-link'
   location: 'global'
-  dependsOn: [
-    managementDnsZone
-  ]
   properties: {
     registrationEnabled: false
     virtualNetwork: {
@@ -216,11 +208,9 @@ resource managementVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLin
 }
 
 resource scmVnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: 'scm.azure-api.net/gateway-vnet-dns-link'
+  parent: scmDnsZone
+  name: 'gateway-vnet-dns-link'
   location: 'global'
-  dependsOn: [
-    scmDnsZone
-  ]
   properties: {
     registrationEnabled: false
     virtualNetwork: {

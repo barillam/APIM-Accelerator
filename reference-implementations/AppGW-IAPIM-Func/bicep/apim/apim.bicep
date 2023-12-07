@@ -20,7 +20,7 @@ param publisherEmail string = 'apim@contoso.com'
 param publisherName string = 'Contoso'
 
 @description('The pricing tier of the APIM resource.')
-param skuName string = 'Basic'
+param skuName string = 'Developer'
 
 @description('The instance size of the APIM resource.')
 param capacity int = 1
@@ -36,7 +36,7 @@ param appInsightsInstrumentationKey string
  * Resources
 */
 
-resource apimName_resource 'Microsoft.ApiManagement/service@2023-03-01-preview' = {
+resource apimName_resource 'Microsoft.ApiManagement/service@2020-12-01' = {
   name: apimName
   location: location
   sku:{

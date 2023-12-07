@@ -3,6 +3,7 @@
 //
 
 @description('A short name for the workload being deployed alphanumberic only')
+@minLength(3)
 @maxLength(8)
 param workloadName string
 

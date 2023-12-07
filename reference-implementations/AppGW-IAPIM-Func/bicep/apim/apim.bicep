@@ -20,7 +20,7 @@ param publisherEmail string = 'apim@contoso.com'
 param publisherName string = 'Contoso'
 
 @description('The pricing tier of the APIM resource.')
-param skuName string = 'BasicV2'
+param skuName string = 'Basic'
 
 @description('The instance size of the APIM resource.')
 param capacity int = 1

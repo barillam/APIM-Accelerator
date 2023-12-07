@@ -469,8 +469,12 @@ resource apimNSG 'Microsoft.Network/networkSecurityGroups@2020-06-01' = {
 resource pip 'Microsoft.Network/publicIPAddresses@2020-07-01' = {
   name: publicIPAddressName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
-    publicIPAllocationMethod: 'Dynamic'
+    publicIPAllocationMethod: 'Static'
   }
 }
 

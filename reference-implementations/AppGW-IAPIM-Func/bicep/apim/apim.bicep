@@ -44,7 +44,7 @@ resource apimName_resource 'Microsoft.ApiManagement/service@2023-03-01-preview' 
     name: skuName
   }
   properties:{
-    virtualNetworkType: 'External'
+    virtualNetworkType: 'Internal'
     publisherEmail: publisherEmail
     publisherName: publisherName
     virtualNetworkConfiguration: {

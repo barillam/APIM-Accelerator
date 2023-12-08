@@ -129,6 +129,9 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
         properties: {
           privateIPAddress: privateIp
           privateIPAllocationMethod: 'Static'
+          subnet: {
+            id: appGatewaySubnetId
+          }
         }
       }
     ]

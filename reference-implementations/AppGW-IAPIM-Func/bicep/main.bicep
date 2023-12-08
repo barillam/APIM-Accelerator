@@ -140,6 +140,7 @@ module apimModule 'apim/apim.bicep'  = {
   params: {
     apimName: apimName
     apimSubnetId: networking.outputs.apimSubnetid
+    skuName: 'Basic'
     location: location
     appInsightsName: shared.outputs.appInsightsName
     appInsightsId: shared.outputs.appInsightsId

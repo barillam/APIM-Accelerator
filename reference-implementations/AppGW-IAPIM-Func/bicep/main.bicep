@@ -62,7 +62,7 @@ var backendResourceGroupName = 'rg-backend-${resourceSuffix}'
 var apimResourceGroupName = 'rg-apim-${resourceSuffix}'
 
 // Resource Names
-var apimName = 'apim-${resourceSuffix}'
+var apimName = 'apim-${resourceSuffix}2'
 var appGatewayName = 'appgw-${resourceSuffix}'
 
 
@@ -140,7 +140,7 @@ module apimModule 'apim/apim.bicep'  = {
   params: {
     apimName: apimName
     apimSubnetId: networking.outputs.apimSubnetid
-    skuName: 'Basic'
+    skuName: 'StandardV2'
     location: location
     appInsightsName: shared.outputs.appInsightsName
     appInsightsId: shared.outputs.appInsightsId

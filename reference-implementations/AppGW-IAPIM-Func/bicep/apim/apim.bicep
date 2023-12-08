@@ -36,7 +36,7 @@ param appInsightsInstrumentationKey string
  * Resources
 */
 
-resource apimName_resource 'Microsoft.ApiManagement/service@2020-12-01' = {
+resource apimName_resource 'Microsoft.ApiManagement/service@2023-03-01-preview' = {
   name: apimName
   location: location
   sku:{
@@ -44,13 +44,21 @@ resource apimName_resource 'Microsoft.ApiManagement/service@2020-12-01' = {
     name: skuName
   }
   properties:{
-    virtualNetworkType: 'Internal'
+    virtualNetworkType: 'External'
     publisherEmail: publisherEmail
     publisherName: publisherName
     virtualNetworkConfiguration: {
       subnetResourceId: apimSubnetId
     }
   }
+  // properties:{
+  //   virtualNetworkType: 'Internal'
+  //   publisherEmail: publisherEmail
+  //   publisherName: publisherName
+  //   virtualNetworkConfiguration: {
+  //     subnetResourceId: apimSubnetId
+  //   }
+  // }
 }
 
 resource apimName_appInsightsLogger_resource 'Microsoft.ApiManagement/service/loggers@2019-01-01' = {

@@ -167,6 +167,13 @@ resource vnetApimCs 'Microsoft.Network/virtualNetworks@2021-02-01' = {
           networkSecurityGroup: {
             id: apimNSG.id
           }
+          delegations:[
+            {
+              properties: {
+                serviceName: 'Microsoft.Web/serverFarms'
+              }
+            }
+          ]
         }
       }
     ]

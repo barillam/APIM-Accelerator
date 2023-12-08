@@ -28,8 +28,11 @@ param keyVaultResourceGroupName     string
 @secure()
 param certPassword                  string  
 
-var appGatewayPrimaryPip            = 'pip-${appGatewayName}'
-var appGatewayIdentityId            = 'identity-${appGatewayName}'
+@description('The ip address for the private listener.')
+param privateIp                     string = '10.2.4.5'
+
+var appGatewayPrimaryPip            = '${appGatewayName}-PIP'
+var appGatewayIdentityId            = '${appGatewayName}-MI'
 
 resource appGatewayIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name:     appGatewayIdentityId
@@ -121,6 +124,13 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
           }
         }
       }
+      {
+        name: 'appGwPrivateFrontendIp'
+        properties: {
+          privateIPAddress: privateIp
+          privateIPAllocationMethod: 'Static'
+        }
+      }
     ]
     frontendPorts: [
       {
@@ -150,7 +160,7 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
     ]
     backendHttpSettingsCollection: [
       {
-        name: 'default'
+        name: 'http'
         properties: {
           port: 80
           protocol: 'Http'
@@ -177,10 +187,10 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
     ]
     httpListeners: [
       {
-        name: 'default'
+        name: 'http-internal'
         properties: {
           frontendIPConfiguration: {
-            id: resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', appGatewayName, 'appGwPublicFrontendIp')
+            id: resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', appGatewayName, 'appGwPrivateFrontendIp')
           }
           frontendPort: {
             id: resourceId('Microsoft.Network/applicationGateways/frontendPorts', appGatewayName, 'port_80')
@@ -191,7 +201,24 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
         }
       }
       {
-        name: 'https'
+        name: 'https-internal'
+        properties: {
+          frontendIPConfiguration: {
+            id: resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', appGatewayName, 'appGwprivateFrontendIp')
+          }
+          frontendPort: {
+            id: resourceId('Microsoft.Network/applicationGateways/frontendPorts', appGatewayName, 'port_443')
+          }
+          protocol: 'Https'
+          sslCertificate: {
+            id: resourceId('Microsoft.Network/applicationGateways/sslCertificates', appGatewayName, appGatewayFQDN)
+          }
+          hostnames: []
+          requireServerNameIndication: false
+        }
+      }
+      {
+        name: 'https-external'
         properties: {
           frontendIPConfiguration: {
             id: resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', appGatewayName, 'appGwPublicFrontendIp')
@@ -211,17 +238,47 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
     urlPathMaps: []
     requestRoutingRules: [
       {
-        name: 'apim'
+        name: 'apim-https-external'
         properties: {
           ruleType: 'Basic'
           httpListener: {
-            id: resourceId('Microsoft.Network/applicationGateways/httpListeners', appGatewayName, 'https')
+            id: resourceId('Microsoft.Network/applicationGateways/httpListeners', appGatewayName, 'https-external')
           }
           backendAddressPool: {
             id: resourceId('Microsoft.Network/applicationGateways/backendAddressPools', appGatewayName, 'apim')
           }
           backendHttpSettings: {
             id: resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', appGatewayName, 'https')
+          }
+        }
+      }
+      {
+        name: 'apim-https-internal'
+        properties: {
+          ruleType: 'Basic'
+          httpListener: {
+            id: resourceId('Microsoft.Network/applicationGateways/httpListeners', appGatewayName, 'https-internal')
+          }
+          backendAddressPool: {
+            id: resourceId('Microsoft.Network/applicationGateways/backendAddressPools', appGatewayName, 'apim')
+          }
+          backendHttpSettings: {
+            id: resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', appGatewayName, 'https')
+          }
+        }
+      }
+      {
+        name: 'apim-https-internal'
+        properties: {
+          ruleType: 'Basic'
+          httpListener: {
+            id: resourceId('Microsoft.Network/applicationGateways/httpListeners', appGatewayName, 'http-internal')
+          }
+          backendAddressPool: {
+            id: resourceId('Microsoft.Network/applicationGateways/backendAddressPools', appGatewayName, 'apim')
+          }
+          backendHttpSettings: {
+            id: resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', appGatewayName, 'http')
           }
         }
       }

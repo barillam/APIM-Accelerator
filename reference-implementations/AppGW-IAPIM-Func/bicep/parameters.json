@@ -28,6 +28,9 @@
         },
         "appGatewayCertType" :{
             "value": "custom"
+        },
+        "appGatewayPrivateIP" :{
+            "value" : "10.2.4.5"
         }
     }
 }

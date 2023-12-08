@@ -46,6 +46,9 @@ param certificatePassword string
 @description('Set to selfsigned if self signed certificates should be used for the Application Gateway. Set to custom and copy the pfx file to deployment/bicep/gateway/certs/appgw.pfx if custom certificates are to be used')
 param appGatewayCertType string
 
+@description('Private IP address of the internal App GW Listener')
+param appGatewayPrivateIP string
+
 param location string = deployment().location
 
 // Variables
@@ -172,6 +175,7 @@ module appgwModule 'gateway/appgw.bicep' = {
     location:                       location
     appGatewaySubnetId:             networking.outputs.appGatewaySubnetid
     primaryBackendEndFQDN:          '${apimName}.azure-api.net'
+    privateIp:                      appGatewayPrivateIP
     keyVaultName:                   shared.outputs.keyVaultName
     keyVaultResourceGroupName:      sharedRG.name
     appGatewayCertType:             appGatewayCertType

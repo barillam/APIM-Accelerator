@@ -268,7 +268,7 @@ resource appGatewayName_resource 'Microsoft.Network/applicationGateways@2019-09-
         }
       }
       {
-        name: 'apim-https-internal'
+        name: 'apim-http-internal'
         properties: {
           ruleType: 'Basic'
           httpListener: {

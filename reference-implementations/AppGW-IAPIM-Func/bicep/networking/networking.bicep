@@ -169,6 +169,7 @@ resource vnetApimCs 'Microsoft.Network/virtualNetworks@2021-02-01' = {
           }
           delegations:[
             {
+              name: 'Microsoft.Web/serverFarms'
               properties: {
                 serviceName: 'Microsoft.Web/serverFarms'
               }

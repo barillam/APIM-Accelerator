@@ -62,7 +62,7 @@ var backendResourceGroupName = 'rg-backend-${resourceSuffix}'
 var apimResourceGroupName = 'rg-apim-${resourceSuffix}'
 
 // Resource Names
-var apimName = 'apim-${resourceSuffix}2'
+var apimName = 'apim-${resourceSuffix}3'
 var appGatewayName = 'appgw-${resourceSuffix}'
 
 

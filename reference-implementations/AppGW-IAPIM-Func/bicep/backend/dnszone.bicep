@@ -17,7 +17,8 @@ resource dnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
 }
 
 resource vnetLinks 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: '${domain}/${uniqueString(vnet.id)}'
+  parent: dnsZone
+  name: uniqueString(vnet.id)
   location: 'global'
   properties: {
     virtualNetwork: {
@@ -25,9 +26,6 @@ resource vnetLinks 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-0
     }
     registrationEnabled: false
   }
-  dependsOn: [
-    dnsZone
-  ]
 }
 
 resource dnsZoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-03-01' = {
